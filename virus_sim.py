@@ -20,6 +20,11 @@ class Person(object):
         self.dead = False
 
     def run(self):
+        """
+        Ages the person by a day, based on their current infection status.
+
+        :return: False, if the person is dead, else True
+        """
         if self.dead:
             return False
 
@@ -130,7 +135,7 @@ class Person(object):
         Probabilistic profile for a person's immunity, based on their age and previous
         infection history.
         """
-        # For now, assume 50% exposure rate when sharing position with infected,
+        # For now, assume flat 50% exposure rate when exposed with infected,
         #  and 95% immunity rate across the board
         return 0.95
 
@@ -169,7 +174,8 @@ class World(object):
         assert num_people > num_initial_infected
 
         for i in range(num_people):
-
+            # TODO: create a more realistic world grid that is larger and contains
+            #  clusters of activity (cities)
             self.add_person(random.randint(0, self.max_x),
                             random.randint(0, self.max_y),
                             self.current_infected < num_initial_infected,
@@ -218,7 +224,8 @@ class World(object):
                 self.current_recovered += 1
                 self.current_infected -= 1
 
-            if person.infected:
+            # Assume 2 days incubation to start spreading to others
+            if person.infected and person.infected_days > 2:
                 for x in range(max(0, last_x - self.contagious),
                                min(self.max_x, last_x + self.contagious)):
                     if not x in self.grid:
@@ -235,6 +242,7 @@ class World(object):
                                 if other_person.infected_time:
                                     self.current_recovered -= 1
 
+        # Easier to just rebuild the grid each day.
         self.grid = {}
         for person in self.people:
             if person.x in self.grid:

@@ -1,7 +1,10 @@
-This is a simplified Python pandemic simulator based on infection properties of COVID-19. The original inspiration was to
+This is a simplified Python pandemic simulator based on infection properties of COVID-19. The inspiration was to
 test different quarantine models on the total number of infected (for example, only quarantining the elderly and at-risk to
 achieve faster herd immunity and reduce total deaths). However, this simulator is still far too simple to draw meaningful 
 conclusions.
+
+Contributions are welcome, especially ones that make the model more realistic without being too computationally expensive, or
+which provide a means to create a digital graphic of the spread of the disease over time.
 
 Requirements:
 pandas
