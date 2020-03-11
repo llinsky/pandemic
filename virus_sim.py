@@ -158,10 +158,11 @@ class Person(object):
 
 class World(object):
     def __init__(self, num_people, num_initial_infected, contagious,
-                 max_x=200, max_y=200):
+                 max_x=200, max_y=200, contagious_delay=1):
         self.max_x = max_x
         self.max_y = max_y
         self.contagious = contagious
+        self.contagious_delay = contagious_delay
 
         self.current_people = num_people
         self.current_infected = 0
@@ -224,8 +225,8 @@ class World(object):
                 self.current_recovered += 1
                 self.current_infected -= 1
 
-            # Assume 2 days incubation to start spreading to others
-            if person.infected and person.infected_time > 2:
+            # Assume delay between infection and spreading to others
+            if person.infected and person.infected_time > self.contagious_delay:
                 for x in range(max(0, last_x - self.contagious),
                                min(self.max_x, last_x + self.contagious)):
                     if not x in self.grid:
