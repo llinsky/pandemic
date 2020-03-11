@@ -269,10 +269,10 @@ class World(object):
                      self.current_recovered, self.current_dead])
         while i < iterations and self.current_people > 0 and self.current_infected > 0:
             self.update()
+            i += 1
             index.append(i)
             data.append([self.current_people, self.current_infected,
                          self.current_recovered, self.current_dead])
-            i += 1
 
         field_names = ["Population", "Infected", "Recovered", "Dead"]
         columns = pd.Index(field_names, dtype="object")
