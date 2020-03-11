@@ -225,7 +225,7 @@ class World(object):
                 self.current_infected -= 1
 
             # Assume 2 days incubation to start spreading to others
-            if person.infected and person.infected_days > 2:
+            if person.infected and person.infected_time > 2:
                 for x in range(max(0, last_x - self.contagious),
                                min(self.max_x, last_x + self.contagious)):
                     if not x in self.grid:
@@ -263,6 +263,9 @@ class World(object):
         i = 0
         index = []
         data = []
+        index.append(i)
+        data.append([self.current_people, self.current_infected,
+                     self.current_recovered, self.current_dead])
         while i < iterations and self.current_people > 0 and self.current_infected > 0:
             self.update()
             index.append(i)
@@ -275,3 +278,4 @@ class World(object):
         dtype = "object"
         df = pd.DataFrame(data, index, columns, dtype, True)
         return df
+
